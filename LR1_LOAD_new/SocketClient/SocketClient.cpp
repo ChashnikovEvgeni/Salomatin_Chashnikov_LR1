@@ -17,7 +17,7 @@ void ProcessMessages()
 {
 	while (true)
 	{  
-		Message m = Message::send(MR_BROKER, MT_GETDATA);
+		Message m = Message::exchange(MR_BROKER, MT_GETDATA);
 		switch (m.header.type)
 		{
 		case MT_DATA:
@@ -39,7 +39,7 @@ void Client()
 	thread t(ProcessMessages);
 	t.detach();
 	
-	Message m = Message::send(MR_BROKER, MT_INIT);
+	Message m = Message::exchange(MR_BROKER, MT_INIT);
 
 	while (true)
 	{

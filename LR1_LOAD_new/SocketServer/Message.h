@@ -66,6 +66,7 @@ public:
 	}
 
 	static void send(CSocket& s, int to, int from, int type = MT_DATA, const string& data = "");
+	static Message exchange(int to, int type = MT_DATA, const string& data = "");
 	static Message send(int to, int type = MT_DATA, const string& data = "");
 };
 

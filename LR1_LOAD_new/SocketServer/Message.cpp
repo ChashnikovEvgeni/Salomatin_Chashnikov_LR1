@@ -25,7 +25,9 @@ void Message::send(CSocket& s, int to, int from, int type, const string& data)
 	m.send(s);
 }
 
-Message Message::send(int to, int type, const string& data)
+
+
+Message Message::exchange(int to, int type, const string& data)
 {
 	CSocket s;
 	s.Create();
@@ -36,9 +38,21 @@ Message Message::send(int to, int type, const string& data)
 	Message m(to, clientID, type, data);
 	m.send(s);
 	if (m.receive(s) == MT_INIT)
-	{
+	{		
 		clientID = m.header.to;
 	}
 	return m;
 }
 
+Message Message::send(int to, int type, const string& data)
+{
+	CSocket s;
+	s.Create();
+	if (!s.Connect("127.0.0.1", 12345))
+	{
+		throw runtime_error(GetLastErrorString());
+	}
+	Message m(to, clientID, type, data);
+	m.send(s);
+	return m;
+}
