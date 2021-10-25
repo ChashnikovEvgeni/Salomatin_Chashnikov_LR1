@@ -16,8 +16,15 @@
 void ProcessMessages()
 {
 	while (true)
-	{  
-		Message m = Message::exchange(MR_BROKER, MT_GETDATA);
+	{
+		Message m;
+		try {
+			m = Message::exchange(MR_BROKER, MT_GETDATA);
+		}
+		catch (runtime_error err)
+		{
+			cout << "Runtime_error:" << err.what() << endl;
+		};
 		switch (m.header.type)
 		{
 		case MT_DATA:
@@ -104,8 +111,13 @@ int main()
 		}
 		else
 		{
-			Client();
-		
+			try {
+				Client();
+			}
+			catch (runtime_error err)
+			{
+				cout << "Runtime_error:" << err.what() << endl;
+			};
 		}
 	}
 	else
